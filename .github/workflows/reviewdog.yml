@@ -1,0 +1,44 @@
+name: reviewdog
+
+on: pull_request
+
+jobs:
+  # 構文チェック用ジョブ（PHP_CodeSniffer + reviewdog）
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2 
+        with:
+          php-version: '8.0' # 環境に合わせて変更
+          tools: composer:v2
+      - name: Resolve dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: lint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./src/vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
+
+  # 静的解析用ジョブ（PHPStan + reviewdog）
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2 
+        with:
+          php-version: '8.0' # 環境に合わせて変更
+          tools: composer:v2
+      - name: Resolve dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Run PHPstan
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./src/vendor/bin/phpstan analyse --error-format=raw --no-progress --memory-limit=1G | reviewdog -reporter=github-pr-review -f=phpstan
