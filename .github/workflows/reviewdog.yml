@@ -17,7 +17,7 @@ jobs:
           php-version: '8.0' # 環境に合わせて変更
           tools: composer:v2
       - name: Resolve dependencies
-        run: ./src composer install --no-progress --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: lint
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
