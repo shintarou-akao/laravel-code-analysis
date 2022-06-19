@@ -1,0 +1,10 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    paths:
+        - app
+    level: 0
+    reportUnmatchedIgnoredErrors: false
+    scanFiles:
+        - _ide_helper.php
