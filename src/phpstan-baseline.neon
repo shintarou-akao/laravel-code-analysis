@@ -1,0 +1,26 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to undefined constant Illuminate\\\\Http\\\\Request\\:\\:HEADER_X_FORWARDED_AWS_ELB\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^Access to undefined constant Illuminate\\\\Http\\\\Request\\:\\:HEADER_X_FORWARDED_FOR\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^Access to undefined constant Illuminate\\\\Http\\\\Request\\:\\:HEADER_X_FORWARDED_HOST\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^Access to undefined constant Illuminate\\\\Http\\\\Request\\:\\:HEADER_X_FORWARDED_PORT\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
+
+		-
+			message: "#^Access to undefined constant Illuminate\\\\Http\\\\Request\\:\\:HEADER_X_FORWARDED_PROTO\\.$#"
+			count: 1
+			path: app/Http/Middleware/TrustProxies.php
