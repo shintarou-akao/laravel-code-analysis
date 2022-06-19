@@ -17,6 +17,7 @@ jobs:
           php-version: '8.0' # 環境に合わせて変更
           tools: composer:v2
       - name: Resolve dependencies
+        working-directory: ./src
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: lint
         env:
@@ -37,6 +38,7 @@ jobs:
           php-version: '8.0' # 環境に合わせて変更
           tools: composer:v2
       - name: Resolve dependencies
+        working-directory: ./src
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHPstan
         env:
